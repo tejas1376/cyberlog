@@ -42,3 +42,29 @@ flutter pub get
 
 4. Run the App
 flutter run
+
+Even/Odd Checker Feature
+JIT vs AOT (Short Summary)
+
+JIT (Just-In-Time): Runs during development. It allows Hot Reload, which makes coding faster.
+
+AOT (Ahead-Of-Time): Used when building the release APK. It makes the app faster and more optimized.
+
+Dart Conditionals Used in the App
+
+I used a simple if-else conditional to check the number:
+
+if (num % 2 == 0) {
+  result = "$num is Even";
+} else {
+  result = "$num is Odd";
+}
+
+String Interpolation
+
+String interpolation was used to show the final result inside a sentence:
+
+result = "$num is Even";
+
+
+Here, $num automatically places the number inside the string.
