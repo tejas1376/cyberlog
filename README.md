@@ -1,72 +1,48 @@
-1. Native vs Cross-Platform Development
+Log Feature (Classes + List Iteration)
+1. How Classes Were Used
 
-Native development means building apps separately for each platform (Android → Java/Kotlin, iOS → Swift/Objective-C).
+I created a custom Dart class named Log with three properties:
 
-Cross-platform development (Flutter) allows using one codebase to build apps for Android, iOS, Web, and Desktop.
+class Log {
+  String action;
+  DateTime timestamp;
+  String status;
 
-Flutter reduces development time because I don’t have to write separate UI code for multiple platforms.
-
-2. Hot Reload
-
-Hot Reload is one of Flutter’s best features.
-
-It allows me to see UI changes instantly without restarting the whole app.
-
-This makes debugging and UI design much faster.
-
-3. Widgets
-
-Flutter apps are built completely using widgets.
-
-Everything in Flutter is a widget → Text, Row, Column, Image, Button, Scaffold, etc.
-
-Widgets can be:
-
-Stateless Widgets: UI does not change
-
-Stateful Widgets: UI updates when state changes
-
-This helps create clean and reusable UI components.
-
-4. Install Flutter
-
-1. Download Flutter from https://flutter.dev
-
-Extract it and add Flutter to your system PATH.
-
-2. Check Installation
-flutter doctor
-
-3. Get Project Dependencies
-flutter pub get
-
-4. Run the App
-flutter run
-
-
-
-Even/Odd Checker Feature
-JIT vs AOT (Short Summary)
-
-JIT (Just-In-Time): Runs during development. It allows Hot Reload, which makes coding faster.
-
-AOT (Ahead-Of-Time): Used when building the release APK. It makes the app faster and more optimized.
-
-Dart Conditionals Used in the App
-
-I used a simple if-else conditional to check the number:
-
-if (num % 2 == 0) {
-  result = "$num is Even";
-} else {
-  result = "$num is Odd";
+  Log({
+    required this.action,
+    required this.timestamp,
+    required this.status,
+  });
 }
 
-String Interpolation
 
-String interpolation was used to show the final result inside a sentence:
+This class acts like a blueprint for each log entry.
+Instead of using separate variables for each item, the class helps keep the data organized, clean, and reusable.
 
-result = "$num is Even";
+2. How List Iteration Was Used to Render Widgets
+
+Inside a StatelessWidget, I created a list containing several Log objects:
+
+final List<Log> logs = [
+  Log(action: "App Started", timestamp: DateTime.now(), status: "Success"),
+  Log(action: "User Logged In", timestamp: DateTime.now(), status: "Success"),
+  Log(action: "Data Fetching", timestamp: DateTime.now(), status: "Pending"),
+];
 
 
-Here, $num automatically places the number inside the string.
+To display them on the screen, I used map(), which loops through each Log and returns a Text widget for it:
+
+children: logs.map((log) {
+  return Text("${log.action} — ${log.timestamp}");
+}).toList(),
+
+
+This method is efficient because:
+
+No manual loop (for) is needed
+
+It automatically converts each Log into a widget
+
+It keeps the UI clean and easy to maintain
+
+You can add more logs without changing the code structure
