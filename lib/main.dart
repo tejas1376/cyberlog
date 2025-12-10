@@ -19,27 +19,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // Variable to store the result message
   String message = '';
 
-  // TextEditingController for the TextField
   TextEditingController controller = TextEditingController();
 
   void checkNumber() {
-    // Get text from TextField
     String input = controller.text;
     
-    // Convert to int
     int number = int.parse(input);
     
-    // Check if even or odd
     if (number % 2 == 0) {
       message = 'The number $number is Even.';
     } else {
       message = 'The number $number is Odd.';
     }
     
-    // Update UI
     setState(() {});
   }
 
