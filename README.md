@@ -1,16 +1,44 @@
-# cyberlog
+1. Native vs Cross-Platform Development
 
-A new Flutter project.
+Native development means building apps separately for each platform (Android → Java/Kotlin, iOS → Swift/Objective-C).
 
-## Getting Started
+Cross-platform development (Flutter) allows using one codebase to build apps for Android, iOS, Web, and Desktop.
 
-This project is a starting point for a Flutter application.
+Flutter reduces development time because I don’t have to write separate UI code for multiple platforms.
 
-A few resources to get you started if this is your first Flutter project:
+2. Hot Reload
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Hot Reload is one of Flutter’s best features.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+It allows me to see UI changes instantly without restarting the whole app.
+
+This makes debugging and UI design much faster.
+
+3. Widgets
+
+Flutter apps are built completely using widgets.
+
+Everything in Flutter is a widget → Text, Row, Column, Image, Button, Scaffold, etc.
+
+Widgets can be:
+
+Stateless Widgets: UI does not change
+
+Stateful Widgets: UI updates when state changes
+
+This helps create clean and reusable UI components.
+
+4. Install Flutter
+
+1. Download Flutter from https://flutter.dev
+
+Extract it and add Flutter to your system PATH.
+
+2. Check Installation
+flutter doctor
+
+3. Get Project Dependencies
+flutter pub get
+
+4. Run the App
+flutter run
