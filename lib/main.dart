@@ -1,60 +1,74 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyHomePage(),
+      home: LogPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
+class Log {
+  String action;
+  DateTime timestamp;
+  String status;
+
+  Log({
+    required this.action,
+    required this.timestamp,
+    required this.status,
+  });
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  String message = '';
+class LogPage extends StatelessWidget {
+  LogPage({super.key});
 
-  TextEditingController controller = TextEditingController();
-
-  void checkNumber() {
-    String input = controller.text;
-    
-    int number = int.parse(input);
-    
-    if (number % 2 == 0) {
-      message = 'The number $number is Even.';
-    } else {
-      message = 'The number $number is Odd.';
-    }
-    
-    setState(() {});
-  }
+  final List<Log> logs = [
+    Log(
+        action: "App Started",
+        timestamp: DateTime.now(),
+        status: "Success"),
+    Log(
+        action: "User Logged In",
+        timestamp: DateTime.now(),
+        status: "Success"),
+    Log(
+        action: "Data Fetching",
+        timestamp: DateTime.now(),
+        status: "Pending"),
+    Log(
+        action: "Background Task",
+        timestamp: DateTime.now(),
+        status: "Failed"),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Even/Odd Checker'),
+        title: const Text("Activity Logs"),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(
-          children: [
-            TextField(
-              controller: controller,
-            ),
-            ElevatedButton(
-              onPressed: checkNumber,
-              child: Text('Check'),
-            ),
-            Text(message),
-          ],
+          crossAxisAlignment: CrossAxisAlignment.start,
+
+          children: logs.map((log) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Text(
+                "${log.action} — ${log.timestamp.toString()}",
+                style: const TextStyle(fontSize: 18),
+              ),
+            );
+          }).toList(),
         ),
       ),
     );
