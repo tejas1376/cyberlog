@@ -1,48 +1,34 @@
-Log Feature (Classes + List Iteration)
-1. How Classes Were Used
+Session 4:
 
-I created a custom Dart class named Log with three properties:
+# Flutter Home Dashboard Assignment
 
-class Log {
-  String action;
-  DateTime timestamp;
-  String status;
+## Project Overview
+A simple Flutter application demonstrating a home dashboard with proper Scaffold structure, AppBar, and Column layout with two cards.
 
-  Log({
-    required this.action,
-    required this.timestamp,
-    required this.status,
-  });
-}
+## Features
+- **Structurally Sound Scaffold**: Proper Flutter widget hierarchy
+- **AppBar**: Customized app bar with title styling
+- **Column Layout**: Vertical arrangement of widgets
+- **Two Container Cards**: Demonstrating layout and styling skills
+- **Responsive Design**: Works on different screen sizes
 
+## Widgets Used
+1. **Scaffold**: Basic app structure
+2. **AppBar**: Top navigation bar
+3. **Column**: Vertical layout
+4. **Container**: For cards with custom styling
+5. **Text**: Displaying content
+6. **SizedBox**: For spacing
 
-This class acts like a blueprint for each log entry.
-Instead of using separate variables for each item, the class helps keep the data organized, clean, and reusable.
+## Code Structure
+- `main.dart`: Entry point
+- `MyApp`: Root widget
+- `HomeScreen`: Main screen with dashboard
 
-2. How List Iteration Was Used to Render Widgets
-
-Inside a StatelessWidget, I created a list containing several Log objects:
-
-final List<Log> logs = [
-  Log(action: "App Started", timestamp: DateTime.now(), status: "Success"),
-  Log(action: "User Logged In", timestamp: DateTime.now(), status: "Success"),
-  Log(action: "Data Fetching", timestamp: DateTime.now(), status: "Pending"),
-];
-
-
-To display them on the screen, I used map(), which loops through each Log and returns a Text widget for it:
-
-children: logs.map((log) {
-  return Text("${log.action} — ${log.timestamp}");
-}).toList(),
-
-
-This method is efficient because:
-
-No manual loop (for) is needed
-
-It automatically converts each Log into a widget
-
-It keeps the UI clean and easy to maintain
-
-You can add more logs without changing the code structure
+## What This Demonstrates
+✅ Proper Scaffold structure  
+✅ AppBar customization  
+✅ Column layout skills  
+✅ Container styling (margin, padding, decoration)  
+✅ Text styling  
+✅ Basic Flutter widget hierarchy  
