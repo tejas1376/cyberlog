@@ -1,6 +1,4 @@
-Session 4:
-
-# Flutter Home Dashboard Assignment
+# Session 4:
 
 ## Project Overview
 A simple Flutter application demonstrating a home dashboard with proper Scaffold structure, AppBar, and Column layout with two cards.
@@ -33,9 +31,9 @@ A simple Flutter application demonstrating a home dashboard with proper Scaffold
 ✅ Text styling  
 ✅ Basic Flutter widget hierarchy  
 
-Session 5:
+# Session 5:
 
-Project Overview
+## Project Overview
 
 This Flutter application demonstrates how to create a home screen using GridView.
 The app displays four placeholder cards arranged in two columns, representing different sections of a cyber-related application.
@@ -108,3 +106,78 @@ Clean and readable Flutter code
 
 This app successfully demonstrates a basic yet visually neat GridView UI using beginner-level Flutter concepts.
 It is suitable for academic assignments and learning layout fundamentals.
+
+# Session 6
+
+## Project Overview
+
+CyberLog is a basic Flutter application that demonstrates the core structure of a mobile app using a BottomNavigationBar.
+The app contains three main pages: Home, Logs, and Settings.
+Each page displays different content, and navigation is handled using icons at the bottom of the screen.
+
+## Features
+
+BottomNavigationBar for main navigation
+
+Three main screens:
+
+Home
+
+Logs
+
+Settings
+
+Smooth switching between screens when icons are tapped
+
+Use of Card widget to display log information
+
+Clean and realistic UI using beginner-level Flutter widgets
+
+## Widgets Used
+
+MaterialApp – root widget of the application
+
+Scaffold – provides app structure (AppBar, Body, BottomNavigationBar)
+
+BottomNavigationBar – used for navigation between pages
+
+Card – used to display log items with elevation and rounded corners
+
+ListTile – used inside Card for structured content
+
+ListView – used to display multiple logs and settings
+
+Icon and Text – used to show icons and labels
+
+## How Navigation Works
+
+The selected tab index is stored in a variable called currentIndex.
+
+When a user taps a bottom navigation icon, setState() updates the index.
+
+The body content changes based on the selected index.
+
+## Role of Card Widget
+
+The Card widget is used in the Logs page.
+
+It helps group log information in a clean and readable way.
+
+Cards provide elevation (shadow) and rounded corners, making the UI look realistic.
+
+## Learning Outcome
+
+This project helps in understanding:
+
+Bottom navigation structure in Flutter
+
+Screen switching using state
+
+Use of Card and ListTile widgets
+
+Building a simple and realistic app layout
+
+## Conclusion
+
+The CyberLog app demonstrates a simple yet effective Flutter app structure suitable for beginners.
+It follows material design principles while keeping the code easy to read and understand.
