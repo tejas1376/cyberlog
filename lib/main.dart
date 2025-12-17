@@ -11,59 +11,133 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: CyberLogApp(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class CyberLogApp extends StatefulWidget {
+  const CyberLogApp({super.key});
+
+  @override
+  State<CyberLogApp> createState() => _CyberLogAppState();
+}
+
+class _CyberLogAppState extends State<CyberLogApp> {
+  int currentIndex = 0;
+
+  // Pages list
+  final List<Widget> pages = const [
+    HomePage(),
+    LogsPage(),
+    SettingsPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home"),
+        title: const Text("CyberLog"),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          children: [
-            simpleCard("Daily Log", Icons.book),
-            simpleCard("Cyber Tips", Icons.security),
-            simpleCard("Device Security", Icons.devices),
-            simpleCard("Notes", Icons.note),
-          ],
-        ),
-      ),
-    );
-  }
 
-  Widget simpleCard(String title, IconData icon) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.blue.shade100,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 35, color: Colors.blue),
-          const SizedBox(height: 8),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-            textAlign: TextAlign.center,
+      body: pages[currentIndex],
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: "Logs",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: "Settings",
           ),
         ],
       ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        "Welcome to CyberLog",
+        style: TextStyle(fontSize: 20),
+      ),
+    );
+  }
+}
+
+class LogsPage extends StatelessWidget {
+  const LogsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: const [
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.security),
+            title: Text("Login Attempt"),
+            subtitle: Text("Checked device security"),
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.wifi),
+            title: Text("Network Scan"),
+            subtitle: Text("WiFi security verified"),
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.lock),
+            title: Text("Password Update"),
+            subtitle: Text("Password changed successfully"),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: const [
+        ListTile(
+          leading: Icon(Icons.person),
+          title: Text("Profile"),
+        ),
+        ListTile(
+          leading: Icon(Icons.notifications),
+          title: Text("Notifications"),
+        ),
+        ListTile(
+          leading: Icon(Icons.privacy_tip),
+          title: Text("Privacy"),
+        ),
+      ],
     );
   }
 }
