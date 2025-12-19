@@ -1,7 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LogProvider()),
+        ChangeNotifierProvider(create: (_) => SettingsProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
+}
+
+class LogProvider extends ChangeNotifier {
+  final List<String> logs = [
+    "App started",
+    "Initial security check done",
+  ];
+
+  void addLog(String log) {
+    logs.add(log);
+    notifyListeners();
+  }
+}
+
+class SettingsProvider extends ChangeNotifier {
+  bool notificationsEnabled = true;
+
+  void toggleNotifications() {
+    notificationsEnabled = !notificationsEnabled;
+    notifyListeners();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -9,9 +39,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CyberLogApp(),
+      theme: ThemeData.dark(),
+      home: const CyberLogApp(),
     );
   }
 }
@@ -26,7 +57,6 @@ class CyberLogApp extends StatefulWidget {
 class _CyberLogAppState extends State<CyberLogApp> {
   int currentIndex = 0;
 
-  // Pages list
   final List<Widget> pages = const [
     HomePage(),
     LogsPage(),
@@ -40,9 +70,7 @@ class _CyberLogAppState extends State<CyberLogApp> {
         title: const Text("CyberLog"),
         centerTitle: true,
       ),
-
       body: pages[currentIndex],
-
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) {
@@ -74,10 +102,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Welcome to CyberLog",
-        style: TextStyle(fontSize: 20),
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          Provider.of<LogProvider>(context, listen: false)
+              .addLog("Manual scan triggered by user");
+        },
+        child: const Text("Add Log Entry"),
       ),
     );
   }
@@ -88,31 +119,19 @@ class LogsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    final logs = Provider.of<LogProvider>(context).logs;
+
+    return ListView.builder(
       padding: const EdgeInsets.all(16),
-      children: const [
-        Card(
+      itemCount: logs.length,
+      itemBuilder: (context, index) {
+        return Card(
           child: ListTile(
-            leading: Icon(Icons.security),
-            title: Text("Login Attempt"),
-            subtitle: Text("Checked device security"),
+            leading: const Icon(Icons.security),
+            title: Text(logs[index]),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.wifi),
-            title: Text("Network Scan"),
-            subtitle: Text("WiFi security verified"),
-          ),
-        ),
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.lock),
-            title: Text("Password Update"),
-            subtitle: Text("Password changed successfully"),
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 }
@@ -122,20 +141,17 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settings = Provider.of<SettingsProvider>(context);
+
     return ListView(
       padding: const EdgeInsets.all(16),
-      children: const [
-        ListTile(
-          leading: Icon(Icons.person),
-          title: Text("Profile"),
-        ),
-        ListTile(
-          leading: Icon(Icons.notifications),
-          title: Text("Notifications"),
-        ),
-        ListTile(
-          leading: Icon(Icons.privacy_tip),
-          title: Text("Privacy"),
+      children: [
+        SwitchListTile(
+          title: const Text("Enable Notifications"),
+          value: settings.notificationsEnabled,
+          onChanged: (value) {
+            settings.toggleNotifications();
+          },
         ),
       ],
     );
