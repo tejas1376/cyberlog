@@ -181,3 +181,106 @@ Building a simple and realistic app layout
 
 The CyberLog app demonstrates a simple yet effective Flutter app structure suitable for beginners.
 It follows material design principles while keeping the code easy to read and understand.
+
+# Session 7
+
+## Project Overview
+
+CyberLog is a basic Flutter application that demonstrates how Provider can be used to manage application state in a clean and simple way.
+The app manages user logs and app settings using ChangeNotifier and displays them across multiple screens.
+
+## Features
+
+BottomNavigationBar based app structure
+
+Three main screens:
+
+Home
+
+Logs
+
+Settings
+
+Provider used for state management
+
+User logs managed centrally
+
+App settings (notifications ON/OFF) managed using Provider
+
+Dark theme UI
+
+Beginner-friendly and easy to understand code
+
+## Technologies & Widgets Used
+
+Flutter
+
+Provider package
+
+ChangeNotifier
+
+notifyListeners()
+
+MultiProvider
+
+BottomNavigationBar
+
+ListView
+
+Card
+
+ListTile
+
+SwitchListTile
+
+🧠 How Provider is Used
+🔹 Log Management
+
+LogProvider stores a list of user logs.
+
+New logs are added from the Home screen.
+
+Logs are displayed on the Logs screen.
+
+UI updates automatically using notifyListeners().
+
+## Settings Management
+
+SettingsProvider manages app settings.
+
+A notification setting is toggled using a switch.
+
+Changes are reflected immediately on the UI.
+
+## Navigation Flow
+
+BottomNavigationBar is used to switch between:
+
+Home
+
+Logs
+
+Settings
+
+The selected tab index is updated using setState().
+
+Each screen consumes data from Provider where required.
+
+## Learning Outcomes
+
+This project helps understand:
+
+State management using Provider
+
+Managing multiple providers using MultiProvider
+
+Sharing data across screens
+
+Creating a realistic app structure
+
+Writing clean and maintainable Flutter code
+
+## Conclusion
+
+The CyberLog app demonstrates a simple yet effective use of Provider to manage both user logs and app settings.
+It is suitable for beginners, academic assignments, and viva explanations.
