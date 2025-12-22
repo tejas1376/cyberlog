@@ -1,159 +1,87 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => LogProvider()),
-        ChangeNotifierProvider(create: (_) => SettingsProvider()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(const CyberLogApp());
 }
 
-class LogProvider extends ChangeNotifier {
-  final List<String> logs = [
-    "App started",
-    "Initial security check done",
-  ];
-
-  void addLog(String log) {
-    logs.add(log);
-    notifyListeners();
-  }
-}
-
-class SettingsProvider extends ChangeNotifier {
-  bool notificationsEnabled = true;
-
-  void toggleNotifications() {
-    notificationsEnabled = !notificationsEnabled;
-    notifyListeners();
-  }
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class CyberLogApp extends StatelessWidget {
+  const CyberLogApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: const CyberLogApp(),
+      home: const HomeScreen(),
     );
   }
 }
 
-class CyberLogApp extends StatefulWidget {
-  const CyberLogApp({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<CyberLogApp> createState() => _CyberLogAppState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _CyberLogAppState extends State<CyberLogApp> {
-  int currentIndex = 0;
+class _HomeScreenState extends State<HomeScreen> {
+  String cyberTip = "Tap the button to get today's cyber tip";
 
-  final List<Widget> pages = const [
-    HomePage(),
-    LogsPage(),
-    SettingsPage(),
-  ];
+  Future<void> fetchCyberTip() async {
+    final response = await http.get(
+      Uri.parse("https://api.adviceslip.com/advice"),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      setState(() {
+        cyberTip = data['slip']['advice'];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("CyberLog"),
+        title: const Text("CyberLog Dashboard"),
         centerTitle: true,
       ),
-      body: pages[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "Logs",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "Settings",
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          Provider.of<LogProvider>(context, listen: false)
-              .addLog("Manual scan triggered by user");
-        },
-        child: const Text("Add Log Entry"),
-      ),
-    );
-  }
-}
-
-class LogsPage extends StatelessWidget {
-  const LogsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final logs = Provider.of<LogProvider>(context).logs;
-
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: logs.length,
-      itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            leading: const Icon(Icons.security),
-            title: Text(logs[index]),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final settings = Provider.of<SettingsProvider>(context);
-
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        SwitchListTile(
-          title: const Text("Enable Notifications"),
-          value: settings.notificationsEnabled,
-          onChanged: (value) {
-            settings.toggleNotifications();
-          },
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Cyber Tip of the Day",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  cyberTip,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                onPressed: fetchCyberTip,
+                child: const Text("Get New Tip"),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
