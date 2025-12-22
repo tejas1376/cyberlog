@@ -284,3 +284,91 @@ Writing clean and maintainable Flutter code
 
 The CyberLog app demonstrates a simple yet effective use of Provider to manage both user logs and app settings.
 It is suitable for beginners, academic assignments, and viva explanations.
+
+# Session 8
+
+## Project Overview
+
+This project is a part of the CyberLog app.
+It adds a “Cyber Tip of the Day” feature that fetches a tip from a public API and displays it cleanly on the dashboard (Home screen).
+
+The app uses a dark mode UI and is designed to be simple, realistic, and beginner-friendly.
+
+## Features
+
+Dark mode UI using Flutter theme
+
+Fetches data from a public API
+
+Displays one value (Cyber Tip text)
+
+Clean dashboard layout
+
+Button to refresh and get a new tip
+
+Ready to push to GitHub
+
+## API Used
+
+Advice Slip API
+
+https://api.adviceslip.com/advice
+
+
+From the API response, only one field (advice) is extracted and shown on the screen.
+
+## Technologies & Packages
+
+Dart
+
+http package
+
+Material UI Widgets
+
+## How It Works
+
+User opens the CyberLog dashboard.
+
+On button press, the app sends a request using http.get().
+
+JSON response is decoded using jsonDecode.
+
+The cyber tip text is extracted.
+
+UI updates using setState().
+
+## Dark Mode Implementation
+
+Dark mode is enabled using:
+
+ThemeData.dark()
+
+
+This automatically applies dark colors to:
+
+AppBar
+
+Background
+
+Cards
+
+Text and buttons
+
+## Learning Outcomes
+
+Fetching data from a public API
+
+Using the http package
+
+Parsing JSON data
+
+Updating UI dynamically
+
+Creating a clean and realistic dashboard UI
+
+Implementing dark mode in Flutter
+
+## Conclusion
+
+The Cyber Tip of the Day feature enhances the CyberLog app by providing useful tips fetched from a public API.
+It demonstrates API integration, clean UI design, and dark mode usage in a simple and understandable way.
