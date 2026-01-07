@@ -65,6 +65,20 @@ Dark and realistic UI
 
 Beginner-friendly, assignment-ready code
 
+## Permission Handling 
+
+Permission-based feature added in CyberLog
+
+Camera permission requested using runtime popup
+
+Storage permission handled via App Settings (Manage External Storage)
+
+Internet permission declared in AndroidManifest
+
+Dark mode UI with simple Card-based layout
+
+Beginner-friendly and realistic permission implementation
+
 ## Technologies & Widgets Used
 
 Flutter & Dart
