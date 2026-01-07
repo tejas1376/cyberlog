@@ -65,7 +65,7 @@ Dark and realistic UI
 
 Beginner-friendly, assignment-ready code
 
-## Permission Handling 
+## Session 10 - Permission Handling 
 
 Permission-based feature added in CyberLog
 
