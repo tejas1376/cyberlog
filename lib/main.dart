@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,52 +13,59 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: const PermissionScreen(),
+      home: const SettingsScreen(),
     );
   }
 }
 
-class PermissionScreen extends StatelessWidget {
-  const PermissionScreen({super.key});
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key});
 
-  Future<void> requestCamera() async {
-    await Permission.camera.request();
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  String deviceModel = "Loading...";
+  String androidVersion = "Loading...";
+
+  @override
+  void initState() {
+    super.initState();
+    getDeviceInfo();
   }
 
-  Future<void> requestStorage() async {
-    await Permission.manageExternalStorage.request();
+  Future<void> getDeviceInfo() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+
+    setState(() {
+      deviceModel = androidInfo.model ?? "Unknown";
+      androidVersion = androidInfo.version.release ?? "Unknown";
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CyberLog Permissions'),
+        title: const Text("Settings"),
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            PermissionCard(
-              icon: Icons.camera_alt,
-              title: 'Camera Permission',
-              subtitle: 'Required to capture photos',
-              onPressed: requestCamera,
+            InfoCard(
+              icon: Icons.phone_android,
+              title: "Device Model",
+              value: deviceModel,
             ),
             const SizedBox(height: 16),
-            PermissionCard(
-              icon: Icons.folder,
-              title: 'Storage Permission',
-              subtitle: 'Required to save files',
-              onPressed: requestStorage,
-            ),
-            const SizedBox(height: 16),
-            PermissionCard(
-              icon: Icons.wifi,
-              title: 'Internet Permission',
-              subtitle: 'Used for online features',
-              onPressed: () {},
+            InfoCard(
+              icon: Icons.system_update,
+              title: "Android Version",
+              value: androidVersion,
             ),
           ],
         ),
@@ -67,18 +74,16 @@ class PermissionScreen extends StatelessWidget {
   }
 }
 
-class PermissionCard extends StatelessWidget {
+class InfoCard extends StatelessWidget {
   final IconData icon;
   final String title;
-  final String subtitle;
-  final VoidCallback onPressed;
+  final String value;
 
-  const PermissionCard({
+  const InfoCard({
     super.key,
     required this.icon,
     required this.title,
-    required this.subtitle,
-    required this.onPressed,
+    required this.value,
   });
 
   @override
@@ -91,21 +96,15 @@ class PermissionCard extends StatelessWidget {
           children: [
             Icon(icon, size: 40),
             const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 4),
-                  Text(subtitle),
-                ],
-              ),
-            ),
-            ElevatedButton(
-              onPressed: onPressed,
-              child: const Text('Allow'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 4),
+                Text(value, style: const TextStyle(fontSize: 14)),
+              ],
             ),
           ],
         ),
