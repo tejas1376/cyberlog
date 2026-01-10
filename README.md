@@ -79,6 +79,18 @@ Dark mode UI with simple Card-based layout
 
 Beginner-friendly and realistic permission implementation
 
+## Session 11 – Device Information
+
+Settings page added to CyberLog
+
+Displays device model using device_info_plus
+
+Shows Android version dynamically
+
+Dark themed and realistic UI
+
+Beginner-friendly Flutter implementation
+
 ## Technologies & Widgets Used
 
 Flutter & Dart
